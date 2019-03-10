@@ -4,6 +4,7 @@ const { keccak, encode, decode, toBuffer, toHex, toWord, mappingAt } = require('
 
 // let getAndVerify = new GetAndVerify("http://3.120.235.185:8545")
 let getProof = new GetProof("http://3.120.235.185:8545");
+getProof.accountProof(randomAdds, blockHash)
 
 let randomAdds = "0x977f2b5e59c9f432fecebf2cc760e93a3630bdc7"
 let accountAddress = "0x387ac0218758868AC1472Ef483ca73fA21B470eb"

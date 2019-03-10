@@ -1,18 +1,31 @@
-
-
-####Step3: 
+####Steps: 
 Run a EIP1186 compatible node (testnet)
 ```
 geth --goerli --rpc --rpcaddr "0.0.0.0"
 ```
 
-####Step5: 
-Connect: 
+Connect to: 
+AWS EC2 instance (temp-goerli) http://3.120.235.185:8545
+
+
+Get StateRoot: 
+`web3.eth.getBlock('latest')`
+
+Publish a OG-auth contract with the desired 'StateRoot'
+
+Generate a Merkle proof using:
+
+`eth-proof`
 ```
-AWS EC2 instance (temp-ropsten) http://3.120.235.185:8545
+const { GetAndVerify, GetProof, VerifyProof } = require('eth-proof')
+let getProof = new GetProof("http://3.120.235.185:8545");
+getProof.accountProof(accountAddress, 'latest')
+```
+
+Verify the proof in Solidity: 
+```
 
 ```
-
 
 
 ##Based on contract participation

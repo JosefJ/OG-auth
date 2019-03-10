@@ -2,25 +2,25 @@ pragma solidity ^0.5.0;
 
 import "./MerkleProof.sol";
 
-contract OGCheck is MerkleProof {
+contract OGAuth {
+    using MerkleProof for *;
     bytes32 public stateroot;
-//    mapping (bytes32 => bool) allowedStates;
+    //    mapping (bytes32 => bool) allowedStates;
     mapping (address => bool) authorized;
 
     event userAuthorized(address);
 
-    constructor(bytes32 _stateroot){
+    constructor(bytes32 _stateroot) public {
         stateroot = _stateroot;
     }
 
     function authSelf(bytes32[] memory proof) public {
-    //        require(allowedStates[root], "Unsupported state"); //TODO: zkus keccak256(msg.sender)
-        require(verify(proof, stateroot, msg.sender), "Key not reputable enough for given state");
+        require(MerkleProof.verify(proof, stateroot, keccak256(abi.encode(msg.sender))), "Key not reputable enough for given state");
         authorized[msg.sender] = true;
         emit userAuthorized(msg.sender);
     }
 
-    function isAuth() public pure returns (bool) {
+    function isAuth() public view returns (bool) {
         return authorized[msg.sender];
     }
 }
